@@ -1,0 +1,8 @@
+# فایل‌ها و پوشه‌های بی‌نیاز به گیت
+__pycache__/
+env/
+venv/
+*.pyc
+.DS_Store
+logs/
+config/config.yaml
