@@ -6,6 +6,7 @@ import os
 load_dotenv()
 
 class Config(BaseSettings):
+    BOT_TOKEN: str = os.getenv("BOT_TOKEN", "")
     DB_HOST: str = os.getenv("DB_HOST", "localhost")
     DB_USER: str = os.getenv("DB_USER", "vpn_user")
     DB_PASSWORD: str = os.getenv("DB_PASSWORD", "pass123456")

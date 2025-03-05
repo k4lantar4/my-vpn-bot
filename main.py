@@ -9,7 +9,7 @@ from bot.handlers.about import router as about_router
 
 # مقداردهی اولیه ربات و دیسپچر
 bot = Bot(token=config.BOT_TOKEN)
-dp = Dispatcher(Bot)
+dp = Dispatcher()
 
 # اضافه کردن هندلرهای مختلف
 dp.include_router(start_router)
