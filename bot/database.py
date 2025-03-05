@@ -48,3 +48,57 @@ def get_users():
         return []
     finally:
         conn.close()
+
+def update_user(telegram_id, new_username):
+    """ ویرایش نام کاربری کاربر """
+    conn = create_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("UPDATE users SET username = %s WHERE telegram_id = %s", (new_username, telegram_id))
+            conn.commit()
+            print(f"✅ نام کاربری کاربر {telegram_id} به '{new_username}' تغییر یافت.")
+    except Exception as e:
+        print(f"❌ خطا در ویرایش کاربر: {e}")
+    finally:
+        conn.close()
+
+def delete_user(telegram_id):
+    """ حذف کاربر از دیتابیس """
+    conn = create_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("DELETE FROM users WHERE telegram_id = %s", (telegram_id,))
+            conn.commit()
+            print(f"✅ کاربر {telegram_id} حذف شد.")
+    except Exception as e:
+        print(f"❌ خطا در حذف کاربر: {e}")
+    finally:
+        conn.close()
+
+def add_subscription(user_id, plan, expires_at):
+    """ اضافه کردن اشتراک جدید """
+    conn = create_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("INSERT INTO subscriptions (user_id, plan, expires_at) VALUES (%s, %s, %s)",
+                           (user_id, plan, expires_at))
+            conn.commit()
+            print(f"✅ اشتراک کاربر {user_id} با پلن {plan} تا {expires_at} ثبت شد.")
+    except Exception as e:
+        print(f"❌ خطا در ثبت اشتراک: {e}")
+    finally:
+        conn.close()
+
+def get_user_subscriptions(user_id):
+    """ دریافت اشتراک‌های کاربر """
+    conn = create_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT plan, expires_at FROM subscriptions WHERE user_id = %s", (user_id,))
+            subscriptions = cursor.fetchall()
+            return subscriptions
+    except Exception as e:
+        print(f"❌ خطا در دریافت اشتراک‌ها: {e}")
+        return []
+    finally:
+        conn.close()
