@@ -34,3 +34,17 @@ def add_user(telegram_id, username):
         print(f"❌ خطا در ثبت کاربر: {e}")
     finally:
         conn.close()
+
+def get_users():
+    """ دریافت لیست کاربران ثبت‌شده در دیتابیس """
+    conn = create_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT telegram_id, username, created_at FROM users ORDER BY created_at DESC")
+            users = cursor.fetchall()
+            return users
+    except Exception as e:
+        print(f"❌ خطا در دریافت کاربران: {e}")
+        return []
+    finally:
+        conn.close()

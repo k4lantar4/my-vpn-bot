@@ -6,6 +6,7 @@ from bot.config import config
 from bot.handlers.start import router as start_router
 from bot.handlers.help import router as help_router
 from bot.handlers.about import router as about_router
+from bot.handlers.users import router as users_router
 
 # مقداردهی اولیه ربات و دیسپچر
 bot = Bot(token=config.BOT_TOKEN)
@@ -15,6 +16,7 @@ dp = Dispatcher()
 dp.include_router(start_router)
 dp.include_router(help_router)
 dp.include_router(about_router)
+dp.include_router(users_router)
 
 # تابع برای اجرای ربات
 async def main():
